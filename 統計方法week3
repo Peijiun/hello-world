@@ -6,7 +6,6 @@ statsdata=data
 statsdata
 statsdata=as.data.frame(statsdata)
 statsdata
-b=3
 xtabs(statsdata)
 breaks=seq(10,100,by=20)
 breaks=seq(0,100,by=20)
