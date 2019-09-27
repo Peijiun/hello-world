@@ -1,0 +1,59 @@
+round (123.456) #預設取到整數
+round (123.456,digits=2) #取到百分位第幾位 =>此:123.45
+data=c(95,57,76,93,87,48,59,69,40,32,53,99,10,78,76,89)
+data
+statsdata=data #makes it into column fasion
+statsdata
+statsdata=as.data.frame(statsdata) #to see the data’s distribution, xtabs only reads data frame (column-like format),xtabs不能讀row data
+statsdata
+xtabs(statsdata) #xtabs shows the data's distribution
+breaks=seq(10,100,by=20) #seq: sequence ; break: how I want break the seq
+breaks=seq(0,100,by=20)
+breaks
+statsdata=statsdata[,1] #changes it into row type data (I want the first column to be changed into the row type column
+statsdata
+statsdata.cut=cut(statsdata,breaks,right=FALSE) #right=FALSE的意思是I don’t include the right boundary
+statsdata.cut #[N(數字)]代表這行從第N個item開始；「Levels: [0,20) [20,40) [40,60) [60,80) [80,100)」表示0到小於20、20到小於40…
+statsdata
+statsdata.freq=table(statsdata.cut)
+statsdata.freq
+cbind(statsdata.freq) #c: column，使它以column呈現
+length(statsdata) #length: 有幾個數字(幾個data)
+statsdata.freq/16 #來算relative frequency(RF)，除以N(個數)
+statsdata.relfreq=statsdata.freq/16 #儲存一下RF成一個variable以便後面cbind
+statsdata.relfreq
+cbind(statsdata.freq,statsdata.relfreq)
+statsdata.cumfreq=cumsum(statsdata.freq) #算cumfreq(累積次數)，儲存一下cumfreq(累積次數)
+statsdata.cumfreq
+cbind(statsdata.freq,statsdata.relfreq,statsdata.cumfreq) 
+statsdata.relcumfreq=statsdata.cumfreq/16 #算累積平均freq (課本table3.7)
+cbind(statsdata.freq,statsdata.relfreq,statsdata.cumfreq,statsdata.relcumfreq) #cbind全部
+#以上為將raw data製成frequency表
+
+quantile(statsdata,.5) #有百分之50學生得分72.5或以下
+quantile(statsdata,.75)
+P=ecdf(statsdata) # 「ECDF」（Empirical Cumulative Distribution Function）
+P(35) #給分數，算給你百分比；得到35分數或以下的人佔全班比例12.5%
+
+#以下為mean運算
+mean(statsdata)
+statsdata-mean(statsdata) #show all the deviation scores
+sum(statsdata-mean(statsdata)) #如果number不是那麼nice(無法除完)，需要rounding，sum就不會剛好0，但會是很小很小的數字(very close to 0)，rounding一定會有error
+median(statsdata)
+#e-14 => 10的負14次方
+
+#以下為看mean(平均數)跟median(中位數)隨著樣本數越大差距越大的情形
+data1=sample(1:100,70,replace=TRUE) #sample=亂數生成，replace=TRUE ->表示我這次抽70，下次還是可以再抽70，不會越抽越小
+data1
+data2=sample(1:100,70,replace=TRUE)
+data2
+data3=sample(1:100,70,replace=TRUE)
+data3
+mean(data1)
+mean(data2)
+mean(data3)
+median(data1)
+median(data2)
+median(data3)
+statsdata
+mean(data1)
